@@ -1,34 +1,37 @@
 <template>
-  <div>
+  <div class="background">
     <Loader v-if="loading" />
     <div v-if="loadedCheckout">
-      <h1>Checkout</h1>
-      <div class="checkout-wrapper">
-        <div class="checkout-info">
-          <div>Produtos</div>
-          <CheckoutProducts :items="loadedCheckout.checkoutItems" />
-          <br />
-          <div>Resumo</div>
-          <div>Preço total: {{ loadedCheckout.totalPrice | moneyFormatter}}</div>
-          <div>Desconto: {{ loadedCheckout.discount | moneyFormatter}}</div>
-          <div class="h4">Valor final:{{ loadedCheckout.totalValue | moneyFormatter}}</div>
+      <h1 class="mb-3">Sistema de compras</h1>
+      <div class="checkout">
+        <h2 class="pt-1">Checkout</h2>
+        <div class="checkout-wrapper">
+          <div class="checkout-info">
+            <div class="h5">Produtos</div>
+            <CheckoutProducts :items="loadedCheckout.checkoutItems" />
+            <br />
+            <div class="h5">Resumo</div>
+            <div>Preço total: {{ loadedCheckout.totalPrice | moneyFormatter}}</div>
+            <div>Desconto: {{ loadedCheckout.discount | moneyFormatter}}</div>
+            <div class="h4 pt-2">Valor final: {{ loadedCheckout.totalValue | moneyFormatter}}</div>
+            <div class="text-center mt-5">
+              <b-button variant="lg" class="btn-danger">Cancelar</b-button>
+            </div>
+          </div>
+          <div class="checkout-payment">
+            <div class="h5">Pagamento ({{ loadedCheckout.status | statusFilter }})</div>
+            <b-tabs content-class="border-continue py-4">
+              <b-tab title="Pix" active>
+                <qrcode-vue :value="qrvalue" :size="300" level="H"></qrcode-vue>
+                <div v-if="pollingInterval">
+                  Confirmando compra ({{pollingCount}})...
+                </div>
+              </b-tab>
+              <b-tab title="Dinheiro" disabled></b-tab>
+              <b-tab title="Cartão" disabled></b-tab>
+            </b-tabs>
+          </div>
         </div>
-        <div class="checkout-payment">
-          <div>Pagamento ({{ loadedCheckout.status | statusFilter }})</div>
-          <b-tabs content-class="border-continue py-4">
-            <b-tab title="pix" active>
-              <qrcode-vue :value="qrvalue" :size="300" level="H"></qrcode-vue>
-              <div v-if="pollingInterval">
-                Confirmando compra ({{pollingCount}})...
-              </div>
-            </b-tab>
-            <b-tab title="cash" disabled></b-tab>
-            <b-tab title="creditCard" disabled></b-tab>
-          </b-tabs>
-        </div>
-      </div>
-      <div class="text-center mt-3">
-        <b-button variant="lg" class="btn-danger">Cancelar</b-button>
       </div>
     </div>
   </div>
@@ -148,13 +151,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.checkout-wrapper {
-  display: flex;
-  max-width: 1200px;
+.checkout {
   margin: 0 auto;
+  max-width: 1200px;
   box-sizing: border-box;
   border: 1px solid black;
   border-radius: 4px;
+  background-color: white;
+}
+
+.checkout-wrapper {
+  display: flex;
 }
 
 .checkout-info {
@@ -175,5 +182,11 @@ export default {
   border-bottom: 1px solid #dee2e6;
   border-left: 1px solid #dee2e6;
   border-right: 1px solid #dee2e6;
+}
+
+.background {
+  background-color: #f1f6f6;
+  height: 100vh;
+  padding-top: 20px;
 }
 </style>

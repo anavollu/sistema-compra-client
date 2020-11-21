@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="background">
     <Loader v-if="cartLoading" />
     <div class="header">
       <h1>Sistema de compras</h1>
@@ -8,7 +8,7 @@
       <div class="products">
         <h2>Produtos</h2>
         <div class="search-products">
-          <p>Buscar produto:</p>
+          <p class="h5">Buscar produto:</p>
           <div class="input-search">
             <b-input
               size="lg"
@@ -28,20 +28,22 @@
           </div>
         </div>
         <div class="product-list">
-          <p>Produtos:</p>
-          <div v-if="loading">Buscando...</div>
-          <div v-else-if="products && products.length === 0">
-            Nenhum produto foi encontrado
-          </div>
-          <ProductItems
-            v-else
-            :products="products"
-            @update-item="handleUpdateItem"
-            :showValue="false"
-          />
+          <p class="h5 mt-2">Produtos:</p>
+            <div v-if="loading">Buscando...</div>
+            <div v-else-if="products && products.length === 0">
+              Nenhum produto foi encontrado
+            </div>
+            <ProductItems
+              class="product-scroll"
+              v-else
+              :products="products"
+              @update-item="handleUpdateItem"
+              :showValue="false"
+            />
         </div>
       </div>
       <CartBox
+        class="cart"
         :items="cartItems"
         @update-cart-item="handleUpdateItem"
       >
@@ -127,7 +129,7 @@ export default {
     async handleFinish() {
       this.$swal
         .fire({
-          title: 'Insira o cpf do ciente',
+          title: 'Insira o CPF do cliente',
           text: 'Ex: 76651806008',
           input: 'text',
           inputAttributes: {
@@ -143,7 +145,7 @@ export default {
           preConfirm: (cpf) => {
             if (!cpf || cpf.length !== 11) {
               return this.$swal.showValidationMessage(
-                'Erro: cpf não tem 11 dígitos',
+                'Erro: CPF não tem 11 dígitos',
               );
             }
             return api
@@ -161,7 +163,7 @@ export default {
                     && error.response.data.message;
                   if (errorMessage === 'user not found') {
                     return this.$swal.showValidationMessage(
-                      'Erro: cpf não está cadastrado',
+                      'Erro: CPF não está cadastrado',
                     );
                   }
                   if (errorMessage.includes('not exists') && errorMessage.includes('item')) {
@@ -197,6 +199,7 @@ export default {
 <style lang="scss" scoped>
 .content {
   display: flex;
+  justify-content: center;
 }
 
 .products {
@@ -209,17 +212,33 @@ export default {
   padding: 15px;
   min-height: 70vh;
   text-align: start;
-  width: 120vh;
+  background-color: white;
+  width: 90vh;
 }
 
 .input-search {
   display: flex;
-  width: 40vh;
+  width: 60vh;
   align-items: center;
 }
 
 .product-list {
   margin-top: 10px;
   max-width: 500px;
+}
+
+.background {
+  background-color: #f1f6f6;
+  height: 100vh;
+  padding-top: 20px;
+}
+
+.cart {
+  background-color: white;
+}
+
+.product-scroll {
+  height: 300px;
+  overflow-y: scroll;
 }
 </style>

@@ -6,7 +6,7 @@
     </div>
     <div class="cart-list">
       <div class="cart-items">
-        <ProductItems :products="items || []"
+        <ProductItems class="product-items" :products="items || []"
           @update-item="({ inc, id }) => $emit('update-cart-item', { inc, id })"/>
         <div class="exchange">
           <p class="mr-3">Vale-troca:</p>
@@ -49,6 +49,7 @@ export default {
   border-radius: 5px;
   padding: 15px;
   min-height: 70vh;
+  width: 90vh;
 }
 
 .cart-items {
@@ -77,5 +78,10 @@ export default {
 .total-price {
   display: flex;
   margin-top: 20px;
+}
+
+.product-items {
+ height: 200px;
+ overflow-y: scroll;
 }
 </style>
