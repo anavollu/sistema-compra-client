@@ -7,14 +7,13 @@
 </template>
 
 <script>
+import MoneyMixin from '../mixins/money';
+
 export default {
   name: 'checkout-products',
   props: ['items'],
+  mixins: [MoneyMixin],
   methods: {
-    moneyFormatter(raw) {
-      if (!raw) return '-';
-      return raw.toLocaleString('pt-BR', { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' });
-    },
     itemLine(item) {
       const { moneyFormatter } = this;
       let line = '';

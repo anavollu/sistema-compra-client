@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import MoneyMixin from '../mixins/money';
+
 export default {
   props: {
     products: {},
@@ -33,12 +35,10 @@ export default {
       default: true,
     },
   },
+  mixins: [MoneyMixin],
   methods: {
     quantityParser(raw) {
       return raw < 10 ? `0${raw}` : `${raw}`;
-    },
-    moneyFormatter(raw) {
-      return raw.toLocaleString('pt-BR', { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' });
     },
   },
 };

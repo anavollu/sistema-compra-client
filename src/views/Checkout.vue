@@ -42,6 +42,7 @@ import QrcodeVue from 'qrcode.vue';
 import CheckoutProducts from '../components/CheckoutProducts.vue';
 import Loader from '../components/Loader.vue';
 import api from '../services/api';
+import MoneyMixin from '../mixins/money';
 
 export default {
   name: 'checkout',
@@ -58,6 +59,7 @@ export default {
     pollingCount: 0,
     pollingInterval: null,
   }),
+  mixins: [MoneyMixin],
   filters: {
     statusFilter(raw) {
       if (!raw) return raw;
@@ -68,10 +70,6 @@ export default {
         refunded: 'ESTORNADO',
       };
       return dict[raw];
-    },
-    moneyFormatter(raw) {
-      if (!raw) return '-';
-      return raw.toLocaleString('pt-BR', { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' });
     },
   },
   computed: {

@@ -1,9 +1,6 @@
-const axios = require('axios');
+import factory from './apiFactory';
 
-const api = axios.create({
-  baseURL: process.env.VUE_APP_API_URL,
-  timeout: 1000,
-});
+const api = factory.create();
 
 export default {
   getProducts({ name }) {
@@ -39,8 +36,5 @@ export default {
         authorization: 'bearer cashier',
       },
     });
-  },
-  updateCheckoutPix({ id }) {
-    return api.patch(`/checkout/${id}/pix/confirm`);
   },
 };

@@ -26,16 +26,13 @@
 
 <script>
 import ProductItems from './ProductItems.vue';
+import MoneyMixin from '../mixins/money';
 
 export default {
   name: 'cart-box',
   components: { ProductItems },
   props: ['items'],
-  methods: {
-    moneyFormatter(raw) {
-      return raw.toLocaleString('pt-BR', { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' });
-    },
-  },
+  mixins: [MoneyMixin],
 };
 </script>
 
