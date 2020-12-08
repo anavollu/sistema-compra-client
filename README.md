@@ -2,7 +2,8 @@
 
 Link do sistema para ser acessado pelo Heroku: https://sistema-compra.herokuapp.com/#/
 
-Obs.: aguardar antes de usar o sistema para que a api inicie
+Obs.: aguardar antes de usar o sistema para que a api inicie.
+
 Caso de uso apresentado: Cliente preferencial faz uma compra com descontos, pagando com Pix e acumulando pontos.
 
 ## Project setup
